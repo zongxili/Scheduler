@@ -18,6 +18,7 @@
       color: $dark-background;
     }
 
+    // this is the colors / style whem the users do the following actions to those objects
     &--selected {
       background-color: darken($white, 5%);
       color: $dark-background;
@@ -27,6 +28,7 @@
       }
     }
 
+    // if the the object is not active
     &--full {
       opacity: $inactive-opacity;
     }
