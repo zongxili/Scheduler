@@ -1,7 +1,5 @@
-import React from "react";
 // import { useState } and our InterviewerList and Button components
 import React, { useState } from "react";
-
 import InterviewerList from "components/InterviewerList";
 import Button from "components/Button";
 
@@ -10,9 +8,9 @@ export default function Form(props) {
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
   const [error, setError] = useState("");
 
-  function reset() {
+  function reset() { 
+    // from instruction
     setName("");
-    setError("");
     setInterviewer(null);
   }
 

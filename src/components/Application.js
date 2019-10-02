@@ -1,33 +1,78 @@
-import React, { useState } from "react";
+import React, { useState, Fragment, useEffect } from "react";
+import DayList from "./DayList";
+import Appointment from "./Appointment/index";
 import "components/Application.scss";
-import DayList from "components/DayList";
 
-// for some reasons this cant be above the "import" statements
-const days = [
+const appointments = [
   {
     id: 1,
-    name: "Monday",
-    spots: 2,
+    time: "12pm",
+    interview: {
+      student: "Just fill some data for id 1",
+      interviewer: {
+        id: 1,
+        name: "Sylvia Palmer",
+        avatar: "https://i.imgur.com/LpaY82x.png",
+      }
+    }
   },
   {
     id: 2,
-    name: "Tuesday",
-    spots: 5,
+    time: "1pm",
+    interview: {
+      student: "Lydia Miller-Jones",
+      interviewer: {
+        id: 1,
+        name: "Sylvia Palmer",
+        avatar: "https://i.imgur.com/LpaY82x.png",
+      }
+    }
   },
   {
     id: 3,
-    name: "Wednesday",
-    spots: 0,
+    time: "2pm",
+    interview: {
+      student: "Zongxi Li",
+      interviewer: {
+        id: 1,
+        name: "Sylvia Palmer",
+        avatar: "https://i.imgur.com/LpaY82x.png",
+      }
+    }
   },
+  {
+    id: 4,
+    time: "3pm",
+    interview: {
+      student: "Tyga",
+      interviewer: {
+        id: 1,
+        name: "Sylvia Palmer",
+        avatar: "https://i.imgur.com/LpaY82x.png",
+      }
+    }
+  },
+  {
+    id: 5,
+    time: "1pm",
+    interview: {
+      student: "Jony J",
+      interviewer: {
+        id: 1,
+        name: "Sylvia Palmer",
+        avatar: "https://i.imgur.com/LpaY82x.png",
+      }
+    }
+  }
 ];
+
 
 export default function Application(props) {
   const [day, setDay] = useState("Monday");
-
+  const [days, setDays] = useState([]);
   return (
     <main className="layout">
       <section className="sidebar">
-        {/* sidebar elements */}
         <img
           className="sidebar--centered"
           src="images/logo.png"
@@ -35,7 +80,7 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList days={days} day={day} setDay={setDay} />
+          <DayList days={days} day={day} setDay={setDay}/>
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
@@ -44,10 +89,15 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
+        <Fragment>
+        {appointments.map(appointment => (
+          <Appointment
+            key={appointment.id}
+            {...appointment}
+        />))}
+        <Appointment key={"last"} time={"12pm"} />
+        </Fragment>
       </section>
     </main>
-    
   );
 }
-

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
-
 import "./styles.scss";
+// Import the Header, Show and Empty 
 import Show from "./Show";
 import Empty from "./Empty";
 import Header from "./Header";
