@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import "./styles.scss";
 // Import the Header, Show and Empty 
 import Show from "./Show";

@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment } from "react";
 import DayList from "./DayList";
 import Appointment from "./Appointment/index";
 import "components/Application.scss";
