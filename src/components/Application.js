@@ -74,7 +74,7 @@ export default function Application(props) {
 
   // Here should insert the useEffect
   // use useState
-  // update the days state with the response
+  // update the days state with the responses
   useEffect(() => {
     axios.get('/api/days')
       .then(response => setDays(response.data))
