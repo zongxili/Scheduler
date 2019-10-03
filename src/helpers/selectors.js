@@ -22,7 +22,6 @@ export function getAppointmentsForDay(state, day) {
   for (let appointmentNum of foundDay.appointments) {
     returnArr.push(appointmentsObj[appointmentNum]);
   }
-  console.log("before returning", returnArr);
   return returnArr;
 };
 
