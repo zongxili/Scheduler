@@ -27,16 +27,10 @@ export function getAppointmentsForDay(state, day) {
 
 export function getInterview(state, interview) {
   let returnObj = null;
-
   if (interview === null){
     return returnObj;
   }
   returnObj = interview;
-
-  // console.log("", interview);
-  // console.log(returnObj);
-  // console.log(returnObj.interviewer);
-
   for (let interviewerObj in state.interviewers){
     if (interviewerObj == returnObj.interviewer) {
       // console.log(state.interviewers[interviewerObj]);
@@ -45,3 +39,18 @@ export function getInterview(state, interview) {
   }
   return returnObj;
 };
+
+// export function getAppointmentsByDay(state, interview) {
+//   let returnObj = null;
+//   if (interview === null){
+//     return returnObj;
+//   }
+//   returnObj = interview;
+//   for (let interviewerObj in state.interviewers){
+//     if (interviewerObj == returnObj.interviewer) {
+//       // console.log(state.interviewers[interviewerObj]);
+//       returnObj.interviewer = state.interviewers[interviewerObj];
+//     }
+//   }
+//   return returnObj;
+// };
