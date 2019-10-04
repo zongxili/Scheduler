@@ -27,7 +27,7 @@ export function getAppointmentsForDay(state, day) {
 
 export function getInterview(state, interview) {
   let returnObj = null;
-  if (interview === null){
+  if (interview === null) {
     return returnObj;
   }
   returnObj = interview;
