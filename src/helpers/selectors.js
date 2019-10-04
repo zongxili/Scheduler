@@ -33,7 +33,6 @@ export function getInterview(state, interview) {
   returnObj = interview;
   for (let interviewerObj in state.interviewers){
     if (interviewerObj == returnObj.interviewer) {
-      // console.log(state.interviewers[interviewerObj]);
       returnObj.interviewer = state.interviewers[interviewerObj];
     }
   }
@@ -50,14 +49,11 @@ export function getInterviewersForDay(state, day) {
     }
   }
   for (let interview in state.interviewers) {
-    // console.log(state.interviewers);
     for (let oneID of interviewersArr) {
-      // console.log(oneID);
       if (oneID === state.interviewers[interview].id){
         returnArr.push(state.interviewers[interview]);
       }
     }
   }
-  console.log(returnArr);
   return returnArr;
 };
