@@ -1,5 +1,5 @@
 # Interview Scheduler
-
+- This is a project built by Zongxi Li during the study in Lighthouse Labs Bootcamp.
 ## Setup
 
 Install dependencies with `npm install`.

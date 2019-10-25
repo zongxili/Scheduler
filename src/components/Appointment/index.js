@@ -17,6 +17,8 @@ export default function Appointment (props) {
   const DELETING = "DELETING";
   const CONFIRM = "CONFIRM";
   const EDIT = "EDIT";
+  const ERROR_SAVE = "ERROR_SAVE";
+  const ERROR_DELETE = "ERROR_DELETE";
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -39,7 +41,7 @@ export default function Appointment (props) {
     };
     transition(DELETING);
     // passed from Application.js
-    props.cancelInterview(props.id, interview)
+    props.cancelInterview(props.id, interview);
   }
 
   function save(name, interviewer) {
@@ -48,7 +50,25 @@ export default function Appointment (props) {
       interviewer
     };
     transition(SAVING);
-    props.bookInterview(props.id, interview);
+
+    // most confusing part
+    // may have the answer: https://stackoverflow.com/questions/46720238/react-express-typeerror-cannot-read-property-then-of-undefined
+
+    // try adding "then" / "return" at the front 
+    // still doesnt work
+    // maybe is the side effect?? 
+    props.bookInterview(props.id, interview).then((result) => {
+      if(result){
+        console.log("promise resolved");
+      }else {
+        console.log("there was an error");
+      }
+      //console.log("test");
+    })
+    // temp.then((result)=> {
+    //   if (result === true)
+    //     console.log(result);
+    // })
   }
 
   useEffect(() => {
@@ -94,7 +114,6 @@ export default function Appointment (props) {
       {mode === CREATE && (
         <Form
           interviewers={props.interviewers}
-          
           // the onCancel can be passed with props
           // the back goes back to the previous step
           onCancel = {back}
