@@ -34,51 +34,83 @@ export default function Appointment (props) {
     transition(CONFIRM);
   }
 
-  function removeAppointment(name, interviewer) {
-    const interview = {
-      student: name,
-      interviewer
-    };
-    transition(DELETING);
-    // passed from Application.js
-    props.cancelInterview(props.id, interview);
-  }
+  // function removeAppointment(name, interviewer) {
+  //   const interview = {
+  //     student: name,
+  //     interviewer
+  //   };
+  //   transition(DELETING);
+  //   // passed from Application.js
+  //   props.cancelInterview(props.id, interview);
+  // }
 
-  function save(name, interviewer) {
+  // function save(name, interviewer) {
+  //   const interview = {
+  //     student: name,
+  //     interviewer
+  //   };
+  //   transition(SAVING);
+
+  //   // most confusing part
+  //   // may have the answer: https://stackoverflow.com/questions/46720238/react-express-typeerror-cannot-read-property-then-of-undefined
+
+  //   // try adding "then" / "return" at the front 
+  //   // still doesnt work
+  //   // maybe is the side effect?? 
+  //   props.bookInterview(props.id, interview).then((result) => {
+  //     if(result){
+  //       console.log("promise resolved");
+  //     }else {
+  //       console.log("there was an error");
+  //     }
+  //     //console.log("test");
+  //   })
+  //   // temp.then((result)=> {
+  //   //   if (result === true)
+  //   //     console.log(result);
+  //   // })
+  // }
+
+
+
+
+  const save = (name, interviewer) => {
     const interview = {
       student: name,
       interviewer
     };
     transition(SAVING);
+    props.bookInterview(props.id, interview)
+      .then(() => transition("SHOW"))
+      .catch(() => transition(ERROR_SAVE, true));
+  };
 
-    // most confusing part
-    // may have the answer: https://stackoverflow.com/questions/46720238/react-express-typeerror-cannot-read-property-then-of-undefined
 
-    // try adding "then" / "return" at the front 
-    // still doesnt work
-    // maybe is the side effect?? 
-    props.bookInterview(props.id, interview).then((result) => {
-      if(result){
-        console.log("promise resolved");
-      }else {
-        console.log("there was an error");
-      }
-      //console.log("test");
-    })
-    // temp.then((result)=> {
-    //   if (result === true)
-    //     console.log(result);
-    // })
+  function removeAppointment() {
+    // SHOW -> CONFIRM (replace) -> DELETING (replace) -> ERROR_DELETE
+    transition(DELETING, true);
+    props.cancelInterview(props.id)
+      .then(() => {
+        console.log("here is then");
+        transition(EMPTY);
+      })
+      .catch(e => {
+        console.log("here is error");
+        transition(ERROR_DELETE, true)
+      });
   }
 
-  useEffect(() => {
-    if (mode === SAVING) {
-      transition(SHOW);
-    } else if (mode === DELETING) {
-      transition(EMPTY)
-    }
-  }, [props.interview])
-  
+
+
+
+  // useEffect(() => {
+  //   if (mode === SAVING) {
+  //     transition(SHOW);
+  //   } else if (mode === DELETING) {
+  //     transition(EMPTY)
+  //   }
+  // }, [props.interview])
+  console.log(props);
   return (
     <article className="appointment">
       <Header time={props.time}/>

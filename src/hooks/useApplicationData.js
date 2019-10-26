@@ -1,51 +1,26 @@
-import React, { useState, Fragment, useEffect } from "react";
-import axios from 'axios';
+import { useEffect, useReducer } from "react";
+import axios from "axios";
 
-export default function useApplicationData(props) {
-  const [state, setState] = useState({
-    day: "Monday",
-    days: [],
-    appointments: {},
-    interviewers: {},
-    interview: {}
-  });
+import reducer, {
+  SET_DAY,
+  SET_APPLICATION_DATA,
+  SET_INTERVIEW,
+  UPDATE_SPOTS
+} from "reducers/application";
 
-  const setDay = day => setState({ ...state, day });
-  const setDays = days => setState(prev => ({ ...prev, days }));
-  // Here should insert the useEffect
-  // use useState
-  // update the days state with the responses
-  useEffect(() => {
-    const promiseDays = axios.get('/api/days');
-    const promiseAppointments = axios.get('/api/appointments');
-    const promiseInterviewers = axios.get('/api/interviewers');
-
-    Promise.all([promiseDays, promiseAppointments, promiseInterviewers]).then(function(values) {
-      setState(prev => ({...prev, days: values[0].data, appointments: values[1].data, interviewers: values[2].data}));
+// will return an object with four keys
+export default function useApplicationData() {
+  const [ state, dispatch ] = useReducer(reducer, 
+    { 
+      day: "Monday",
+      days: [],
+      appointments: {},
+      interviewers: {}
     });
-  },[]);
 
-  function cancelInterview(id, interview){
-    // this is an object
-    const appointment = {
-      ...state.appointments[id]
-    };
-    // a parent object with many sub objects
-    const appointments = {
-      ...state.appointments
-    };
-    appointments[id].interview = null;
-    // call to database
-    axios.delete(`/api/appointments/${id}`).then(
-      () => {
-        setState(prevState => ({
-          ...prevState,
-          appointments
-        }));
-      }
-    );
-  }
-
+  // inputs: 
+  // - id: appointment id
+  // - interview: interview object
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -55,13 +30,55 @@ export default function useApplicationData(props) {
       ...state.appointments,
       [id]: appointment
     };
-    axios.put(`/api/appointments/${id}`, { interview }).then(
-      () => {
-        setState(prevState => ({
-          ...prevState,
-          appointments
-        }));
-      }
-    );
+    return axios.put(`/api/appointments/${id}`, appointment)
+      .then(() => {
+        dispatch({ type: SET_INTERVIEW, appointments });
+        dispatch({ type: UPDATE_SPOTS, day: state.day, days: state.days, appointments: state.appointments});
+      });
   }
+
+  // input: 
+  // - id: appointment id
+  function cancelInterview(id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    return axios.delete(`/api/appointments/${id}`)
+      .then(() => {
+        dispatch({ type: SET_INTERVIEW, appointments });
+        dispatch({ type: UPDATE_SPOTS, day: state.day, days: state.days, appointments: state.appointments});
+      });
+  }
+
+  const setDay = day => dispatch({ type: SET_DAY, day });
+
+  const setStateObj = (days, appointments, interviewers) => {
+    dispatch({ type: SET_APPLICATION_DATA, interviewers, days, appointments });
+  };
+
+  useEffect(() => {
+    Promise.all([
+      axios.get('/api/days'),
+      axios.get('/api/appointments'),
+      axios.get('/api/interviewers')
+    ])
+      .then(res => {
+        setStateObj(res[0].data, res[1].data, res[2].data);
+      })
+      .catch(e => console.log(e));
+  }, []);
+
+  return {
+    state,
+    setDay,
+    bookInterview,
+    cancelInterview
+  };
 }
