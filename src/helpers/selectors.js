@@ -26,17 +26,18 @@ export function getAppointmentsForDay(state, day) {
 };
 
 export function getInterview(state, interview) {
-  let returnObj = null;
-  if (interview === null) {
-    return returnObj;
-  }
-  returnObj = interview;
-  for (let interviewerObj in state.interviewers){
-    if (interviewerObj == returnObj.interviewer) {
-      returnObj.interviewer = state.interviewers[interviewerObj];
+  let returnObj = {};
+  for(let appointmentID in state.appointments) {
+    if (interview === null)
+      return interview;
+    if(state.appointments[appointmentID].interview === interview) {
+      let interviewerID = (state.appointments[appointmentID].interview.interviewer).toString()
+      let interviewer = state.interviewers[interviewerID];
+      returnObj["student"] = interview.student
+      returnObj["interviewer"]= interviewer
+      return returnObj;
     }
   }
-  return returnObj;
 };
 
 // return an array of appointments for the given day

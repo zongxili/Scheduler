@@ -14,8 +14,6 @@ export default function Form(props) {
     setInterviewer(null);
   }
 
-  // avoid the inputed name is a empty string
-  // also this does the saving job
   const validate = () => {
     if (name === "") {
       setError("Student name cannot be blank");
@@ -23,7 +21,7 @@ export default function Form(props) {
     } else if (!interviewer) {
       setError("Please select an interviewer")
     } else {
-
+      // cant be in the first step since we dont know if we get the interviewer or not
       setError("");
       props.onSave(name, interviewer);
       return;
@@ -46,18 +44,16 @@ export default function Form(props) {
             type="text"
             placeholder="Enter Student Name"
             onChange={(event) => setName(event.target.value)}
-          /*
-            This must be a controlled component
-          */
           />
         </form>
-        <section className="appointment__validation">{error}</section>
+
+        <section className="appointment__validation" /* output the error msg */ >{error}</section>
         <InterviewerList interviewers={props.interviewers} value={interviewer} onChange={setInterviewer} />
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
           <Button danger onClick={cancel}>Cancel</Button>
-          <Button confirm onClick={() => validate}>Save</Button>
+          <Button confirm onClick={() => validate()}>Save</Button>
         </section>
       </section>
     </main>
