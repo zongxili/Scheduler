@@ -5,10 +5,9 @@ import reducer, {
   SET_DAY,
   SET_APPLICATION_DATA,
   SET_INTERVIEW,
-  UPDATE_SPOTS
+  REMINDING_SPOTS
 } from "reducers/application";
 
-// will return an object with four keys
 export default function useApplicationData() {
   const [ state, dispatch ] = useReducer(reducer, 
     { 
@@ -18,9 +17,6 @@ export default function useApplicationData() {
       interviewers: {}
     });
 
-  // inputs: 
-  // - id: appointment id
-  // - interview: interview object
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -33,12 +29,10 @@ export default function useApplicationData() {
     return axios.put(`/api/appointments/${id}`, appointment)
       .then(() => {
         dispatch({ type: SET_INTERVIEW, appointments });
-        dispatch({ type: UPDATE_SPOTS, day: state.day, days: state.days, appointments: state.appointments});
+        dispatch({ type: REMINDING_SPOTS, day: state.day, days: state.days, appointments: state.appointments});
       });
   }
 
-  // input: 
-  // - id: appointment id
   function cancelInterview(id) {
     const appointment = {
       ...state.appointments[id],
@@ -53,7 +47,7 @@ export default function useApplicationData() {
     return axios.delete(`/api/appointments/${id}`)
       .then(() => {
         dispatch({ type: SET_INTERVIEW, appointments });
-        dispatch({ type: UPDATE_SPOTS, day: state.day, days: state.days, appointments: state.appointments});
+        dispatch({ type: REMINDING_SPOTS, day: state.day, days: state.days, appointments: state.appointments});
       });
   }
 
@@ -75,10 +69,5 @@ export default function useApplicationData() {
       .catch(e => console.log(e));
   }, []);
 
-  return {
-    state,
-    setDay,
-    bookInterview,
-    cancelInterview
-  };
+  return {state, setDay, bookInterview, cancelInterview};
 }

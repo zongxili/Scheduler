@@ -8,6 +8,7 @@ import Form from "./Form";
 import useVisualMode from "../../hooks/useVisualMode";
 import Status from "./Status";
 import Confirm from "./Confirm";
+import Error from "./Error";
 
 export default function Appointment (props) {
   const EMPTY = "EMPTY";
@@ -61,9 +62,6 @@ export default function Appointment (props) {
         transition(ERROR_DELETE, true)
       });
   }
-
-
-
 
   // useEffect(() => {
   //   if (mode === SAVING) {
@@ -121,6 +119,18 @@ export default function Appointment (props) {
           interviewer={props.interview.interviewer.id}
           onCancel = {back}
           onSave = {save}
+        />
+      )}
+      {mode === ERROR_SAVE && (
+        <Error
+        message={"Could not book an appointment, please try again"}
+        onClose={back} 
+        />
+      )}
+      {mode === ERROR_DELETE && (
+        <Error
+          message={"Could not remove an appointment, please try again"}
+          onClose={back}
         />
       )}
     </article>
