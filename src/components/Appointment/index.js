@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import "./styles.scss";
 // Import the Header, Show and Empty 
 import Show from "./Show";
@@ -34,46 +34,8 @@ export default function Appointment (props) {
     transition(CONFIRM);
   }
 
-  // function removeAppointment(name, interviewer) {
-  //   const interview = {
-  //     student: name,
-  //     interviewer
-  //   };
-  //   transition(DELETING);
-  //   // passed from Application.js
-  //   props.cancelInterview(props.id, interview);
-  // }
-
-  // function save(name, interviewer) {
-  //   const interview = {
-  //     student: name,
-  //     interviewer
-  //   };
-  //   transition(SAVING);
-
-  //   // most confusing part
-  //   // may have the answer: https://stackoverflow.com/questions/46720238/react-express-typeerror-cannot-read-property-then-of-undefined
-
-  //   // try adding "then" / "return" at the front 
-  //   // still doesnt work
-  //   // maybe is the side effect?? 
-  //   props.bookInterview(props.id, interview).then((result) => {
-  //     if(result){
-  //       console.log("promise resolved");
-  //     }else {
-  //       console.log("there was an error");
-  //     }
-  //     //console.log("test");
-  //   })
-  //   // temp.then((result)=> {
-  //   //   if (result === true)
-  //   //     console.log(result);
-  //   // })
-  // }
-
-
-
-
+  // most confusing part
+  // may have the answer: https://stackoverflow.com/questions/46720238/react-express-typeerror-cannot-read-property-then-of-undefined
   const save = (name, interviewer) => {
     const interview = {
       student: name,
