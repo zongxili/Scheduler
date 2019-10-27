@@ -48,7 +48,7 @@ npm run storybook
 ![Create an appoinment](gifs/createApm.gif)
 
 - Update an Appointment
-![Update an appoinment](gifs/createApm.gif)
+![Update an appoinment](gifs/updateApm.gif)
 
-- Delete an Appointment
-![Update an appoinment](gifs/deleteApm.gif)
+- Delete an Appointment (The other appointments are still there)
+![Update an appoinment](gifs/deleteAppo.gif)
