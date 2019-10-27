@@ -51,4 +51,7 @@ npm run storybook
 ![Update an appoinment](gifs/updateApm.gif)
 
 - Delete an Appointment (The other appointments are still there)
-![Update an appoinment](gifs/deleteAppo.gif)
+![Delete an appoinment](gifs/deleteAppo.gif)
+
+- Show the error message if unfortunately there is an error in server side
+![Handle Error](gifs/error_handling.gif)
