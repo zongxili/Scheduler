@@ -1,5 +1,5 @@
 # Interview Scheduler
-- This is a "Appoinment Booking" project built by Zongxi Li during the study in Lighthouse Labs Bootcamp. It is powered by React.JS and Express that provides the main functions you'd expect from a booking, such as making an appointment, removing an appointment and making changes to it, etc.
+- It is an "Appointment Booking" project built by Zongxi Li during the study in Lighthouse Labs Bootcamp. It is powered by React.JS and Express that provides the main functions you'd expect from a booking, such as making an appointment, removing a date and making changes to it, etc.
 
 ## Setup
 Install dependencies with `npm install`.
